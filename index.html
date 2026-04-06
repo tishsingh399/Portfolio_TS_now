@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tina Singh — Senior Product Designer</title>
+
   <!-- Google Fonts: Archivo (display) + Space Grotesk (body) + JetBrains Mono -->
   <!-- Replace with Apercu when licensed: https://www.colophon-foundry.org/typefaces/apercu -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -12,40 +13,39 @@
 
   <style>
     /* ============================================================
-       BRAND TOKENS
-       ui-ux-pro-max: OLED Dark + Portfolio/Personal palette
+       BRAND TOKENS — ui-ux-pro-max: OLED Dark + Portfolio palette
        ============================================================ */
     :root {
-      /* OLED-optimised dark (skill: Dark Mode OLED) */
-      --bg:         #000000;
-      --surface:    #111111;
-      --surface-2:  #1A1A1A;
-      --border:     rgba(255,255,255,0.08);
-      --text-primary:   #FFFFFF;       /* contrast 21:1 */
-      --text-secondary: #D9D9D9;       /* contrast ~12:1 */
-      --text-muted:     #888888;       /* contrast ~5.7:1 — WCAG AA */
+      --bg:             #000000;
+      --surface:        #111111;
+      --surface-2:      #1A1A1A;
+      --border:         rgba(255,255,255,0.08);
+      --border-strong:  rgba(255,255,255,0.15);
+      --text-primary:   #FFFFFF;
+      --text-secondary: #D9D9D9;
+      --text-muted:     #888888;
 
-      /* skill: Minimalist Portfolio typography */
       --font-display: 'Archivo', 'Inter', sans-serif;
       --font-body:    'Space Grotesk', 'Inter', sans-serif;
       --font-mono:    'JetBrains Mono', monospace;
-      /* swap to Apercu once licensed: */
-      /* --font-display: 'Apercu', 'Archivo', sans-serif; */
+      /* swap to Apercu once licensed */
 
-      --size-hero:    clamp(52px, 7vw, 96px);
-      --size-section: clamp(36px, 4.5vw, 64px);
-      --size-card:    clamp(22px, 2.5vw, 32px);
+      --size-name:    clamp(56px, 9vw, 120px);
+      --size-hero:    clamp(14px, 1.2vw, 16px);
+      --size-oneliner: clamp(18px, 1.8vw, 24px);
+      --size-metric:  clamp(40px, 5vw, 64px);
+      --size-section: clamp(32px, 3.5vw, 48px);
+      --size-card:    clamp(20px, 2vw, 26px);
       --size-body:    clamp(15px, 1.1vw, 17px);
-      --size-meta:    13px;
+      --size-meta:    12px;
 
-      --space-section: 128px;
-      --space-card-gap: 32px;
+      --space-section: 120px;
       --max-width: 1200px;
-      --radius: 4px;
+      --radius: 3px;
     }
 
     /* ============================================================
-       RESET
+       RESET + BASE
        ============================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -57,31 +57,30 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
+    h1, h2, h3, .display { font-family: var(--font-display); }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; }
 
-    /* skill: accessibility — visible focus rings (2–4px, WCAG 2.4.11) */
+    /* Accessibility */
     :focus-visible {
-      outline: 2px solid rgba(255,255,255,0.6);
+      outline: 2px solid rgba(255,255,255,0.5);
       outline-offset: 4px;
       border-radius: 2px;
     }
-
-    /* skill: reduced-motion — disable all transitions/animations */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
         transition-duration: 0.01ms !important;
       }
     }
-    a { color: inherit; text-decoration: none; }
-    img { display: block; width: 100%; }
 
     /* ============================================================
-       LAYOUT UTILITIES
+       LAYOUT
        ============================================================ */
     .container {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 0 32px;
+      padding: 0 40px;
     }
     .placeholder {
       background: var(--surface);
@@ -92,8 +91,18 @@
       justify-content: center;
       color: var(--text-muted);
       font-family: var(--font-mono);
-      font-size: 12px;
-      letter-spacing: 0.05em;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+    .mono {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
     }
 
     /* ============================================================
@@ -103,17 +112,16 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      padding: 24px 32px;
+      padding: 24px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      /* INTERACTION ZONE: blur background on scroll */
     }
     .nav-logo {
-      font-size: 15px;
       font-family: var(--font-mono);
-      color: var(--text-secondary);
-      letter-spacing: 0.08em;
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
     }
     .nav-links {
       display: flex;
@@ -121,258 +129,419 @@
       list-style: none;
     }
     .nav-links a {
+      font-family: var(--font-mono);
       font-size: var(--size-meta);
       color: var(--text-muted);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      letter-spacing: 0.1em;
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--text-primary); }
 
     /* ============================================================
-       HERO — full viewport
-       INTERACTION ZONE: subtle grid parallax on scroll (depth cue)
+       HERO — name as the visual centrepiece
+       INTERACTION ZONE: grid parallax, name fade-in on load
        ============================================================ */
     .hero {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding-bottom: var(--space-section);
+      padding-top: 80px;
+      padding-bottom: 80px;
       position: relative;
       overflow: hidden;
     }
-    /* Grid overlay — parallax layer */
+    /* Subtle grid — parallax depth layer */
     .hero-grid {
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
       background-size: 80px 80px;
-      /* INTERACTION ZONE: translateY(−20px) on scroll via JS */
       pointer-events: none;
+      /* INTERACTION ZONE: translateY on scroll (JS below) */
     }
-    .hero-content {
-      position: relative;
-      z-index: 1;
-    }
-    /* skill: Archivo for all display headings */
-    h1, h2, h3, .card-title, .about-heading, .cs-hero h1, .cs-next-title {
+    .hero-content { position: relative; z-index: 1; }
+
+    /* Name — the hero element */
+    .hero-name {
       font-family: var(--font-display);
-    }
-    .hero h1 {
-      font-size: var(--size-hero);
+      font-size: var(--size-name);
       font-weight: 300;
-      line-height: 1.05;
-      letter-spacing: -0.02em;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
       color: var(--text-primary);
-      max-width: 900px;
-      margin-bottom: 48px;
-    }
-    .hero-meta {
-      display: flex;
-      align-items: center;
-      gap: 40px;
-    }
-    .hero-role {
-      font-family: var(--font-mono);
-      font-size: var(--size-meta);
-      color: var(--text-muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    .hero-socials {
-      display: flex;
-      gap: 20px;
-      list-style: none;
-    }
-    .hero-socials a {
-      font-size: var(--size-meta);
-      color: var(--text-muted);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    .hero-socials a:hover { color: var(--text-primary); }
-    .scroll-hint {
-      position: absolute;
-      bottom: 32px;
-      right: 32px;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      writing-mode: vertical-rl;
-      /* INTERACTION ZONE: fade out on scroll */
+      margin-bottom: 32px;
+      /* INTERACTION ZONE: opacity 0→1 + translateY 20px→0 on load */
     }
 
-    /* ============================================================
-       WORK SECTION
-       ============================================================ */
-    .work {
-      padding: var(--space-section) 0;
+    /* Title row */
+    .hero-title-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 28px;
     }
-    .section-label {
+    .hero-title {
       font-family: var(--font-mono);
       font-size: var(--size-meta);
       color: var(--text-muted);
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      margin-bottom: 64px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
     }
-    .section-label::after {
-      content: '';
+    .hero-divider {
       flex: 1;
       height: 1px;
       background: var(--border);
     }
 
-    /* Case study cards — Kunai-style alternating layout */
-    .work-list {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-card-gap);
+    /* One-liner */
+    .hero-oneliner {
+      font-size: var(--size-oneliner);
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      max-width: 620px;
+      margin-bottom: 48px;
     }
-    .case-card {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: center;
-      padding: 48px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      transition: border-color 0.3s;
-      /* INTERACTION ZONE: opacity + translateY reveal on scroll entry */
-      cursor: pointer;
-    }
-    .case-card:hover { border-color: #444; }
-    /* Alternate: text left / image right  ↕  image left / text right */
-    .case-card.alt { direction: rtl; }
-    .case-card.alt > * { direction: ltr; }
 
-    .card-text { display: flex; flex-direction: column; gap: 16px; }
-    .card-index {
+    /* Status + socials row */
+    .hero-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .hero-status {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+    .hero-socials {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .hero-socials a {
       font-family: var(--font-mono);
       font-size: var(--size-meta);
       color: var(--text-muted);
       letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .hero-socials a:hover { color: var(--text-primary); }
+
+    /* ============================================================
+       METRICS STRIP
+       ============================================================ */
+    .metrics {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .metrics-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .metric-box {
+      padding: 40px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .metric-box:last-child { border-right: none; }
+    .metric-label {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .metric-value {
+      font-family: var(--font-display);
+      font-size: var(--size-metric);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    /* ============================================================
+       WORK SECTION
+       INTERACTION ZONE: cards reveal on scroll
+       ============================================================ */
+    .work {
+      padding: var(--space-section) 0;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 64px;
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .section-rule {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .work-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    /* Card — full-width row, text left / image right */
+    .case-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.3s;
+      cursor: pointer;
+      /* INTERACTION ZONE: opacity + translateY on scroll entry */
+    }
+    .case-card:hover { border-color: var(--border-strong); }
+    .case-card.alt { direction: rtl; }
+    .case-card.alt > * { direction: ltr; }
+
+    .card-text {
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
+    }
+    .card-tag {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
     .card-title {
+      font-family: var(--font-display);
       font-size: var(--size-card);
-      font-weight: 500;
-      line-height: 1.15;
+      font-weight: 400;
+      line-height: 1.2;
       letter-spacing: -0.01em;
+      color: var(--text-primary);
     }
     .card-subtitle {
       font-size: var(--size-meta);
       color: var(--text-muted);
-      line-height: 1.5;
-      max-width: 380px;
-    }
-    .card-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-    .tag {
+      line-height: 1.6;
       font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 4px 12px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 4px;
     }
     .card-cta {
       margin-top: 24px;
+      font-family: var(--font-mono);
       font-size: var(--size-meta);
       color: var(--text-secondary);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: gap 0.2s;
+      transition: gap 0.25s;
     }
     .case-card:hover .card-cta { gap: 16px; }
     .card-cta::after { content: '→'; }
 
-    /* Image placeholder — 16:9 aspect */
     .card-image {
       aspect-ratio: 16 / 10;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+    }
+    .case-card.alt .card-image {
+      border-left: none;
+      border-right: 1px solid var(--border);
     }
 
     /* ============================================================
-       ABOUT STRIP
+       ABOUT / BIO
        ============================================================ */
-    .about-strip {
+    .about {
       padding: var(--space-section) 0;
       border-top: 1px solid var(--border);
     }
     .about-inner {
       display: grid;
-      grid-template-columns: 1fr 2fr;
+      grid-template-columns: 5fr 7fr;
       gap: 80px;
       align-items: start;
     }
     .about-heading {
+      font-family: var(--font-display);
       font-size: var(--size-section);
       font-weight: 300;
       letter-spacing: -0.02em;
       line-height: 1.1;
+      color: var(--text-primary);
     }
-    .about-body {
+    .about-right {
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 32px;
     }
-    .about-body p {
-      font-size: var(--size-body);
+    .about-bio {
+      font-size: var(--size-oneliner);
+      font-weight: 300;
       color: var(--text-secondary);
-      line-height: 1.75;
+      line-height: 1.65;
     }
-    .skills-row {
+    .specializations {
       display: flex;
-      gap: 48px;
-      margin-top: 16px;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--border);
     }
-    .skill-group h4 {
+    .spec-item {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
       font-family: var(--font-mono);
       font-size: var(--size-meta);
       color: var(--text-muted);
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    .skill-group ul {
-      list-style: none;
       display: flex;
-      flex-direction: column;
-      gap: 6px;
+      align-items: center;
+      justify-content: space-between;
     }
-    .skill-group li {
+    .spec-item::after {
+      content: '↗';
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .spec-item:hover { color: var(--text-primary); }
+    .spec-item:hover::after { opacity: 1; }
+
+    /* ============================================================
+       CURIOSITY / LAB TEASER
+       ============================================================ */
+    .lab {
+      padding: var(--space-section) 0;
+      border-top: 1px solid var(--border);
+    }
+    .lab-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .lab-tag {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .lab-title {
+      font-family: var(--font-display);
+      font-size: var(--size-section);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .lab-subtitle {
       font-size: var(--size-body);
-      color: var(--text-secondary);
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 32px;
     }
+    .lab-link {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      color: var(--text-secondary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.25s;
+    }
+    .lab-link:hover { gap: 16px; color: var(--text-primary); }
+    /* PLACEHOLDER for lab visual — timeline or abstract */
+    .lab-visual {
+      aspect-ratio: 4/3;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ============================================================
+       CONTACT / CTA
+       ============================================================ */
+    .contact {
+      padding: var(--space-section) 0;
+      border-top: 1px solid var(--border);
+    }
+    .contact-headline {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 5vw, 72px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+    .contact-body {
+      font-size: var(--size-body);
+      color: var(--text-muted);
+      margin-bottom: 48px;
+      max-width: 480px;
+    }
+    .contact-links {
+      display: flex;
+      gap: 32px;
+    }
+    .contact-link {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      color: var(--text-secondary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.25s, color 0.2s;
+    }
+    .contact-link:hover { gap: 16px; color: var(--text-primary); }
+    .contact-link::after { content: '↗'; }
 
     /* ============================================================
        FOOTER
        ============================================================ */
     footer {
-      padding: 48px 32px;
+      padding: 32px 40px;
       border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .footer-name {
+    .footer-copy {
       font-family: var(--font-mono);
       font-size: var(--size-meta);
       color: var(--text-muted);
@@ -384,49 +553,62 @@
       list-style: none;
     }
     .footer-links a {
+      font-family: var(--font-mono);
       font-size: var(--size-meta);
       color: var(--text-muted);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       transition: color 0.2s;
     }
     .footer-links a:hover { color: var(--text-primary); }
 
     /* ============================================================
-       CASE STUDY PAGE  (hidden by default — shown via JS hash nav)
+       CASE STUDY PAGE (hidden, toggled via JS)
        ============================================================ */
-    .case-study-page {
-      display: none;
-      padding-top: 80px; /* nav height offset */
-    }
-    .case-study-page.active { display: block; }
+    #page-case { display: none; padding-top: 80px; }
 
     .cs-hero {
-      min-height: 60vh;
-      padding: var(--space-section) 0;
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cs-hero-inner {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 80px;
       align-items: center;
-      border-bottom: 1px solid var(--border);
     }
-    .cs-hero-text {}
-    .cs-label {
+    .cs-back {
       font-family: var(--font-mono);
       font-size: var(--size-meta);
       color: var(--text-muted);
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      margin-bottom: 24px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 32px;
+      cursor: pointer;
+      transition: color 0.2s;
     }
-    .cs-hero h1 {
-      font-size: clamp(36px, 4vw, 64px);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
+    .cs-back::before { content: '←'; }
+    .cs-back:hover { color: var(--text-primary); }
+    .cs-tag {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       margin-bottom: 20px;
     }
-    .cs-hero .subtitle {
+    .cs-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 3.5vw, 52px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .cs-subtitle {
       font-size: var(--size-body);
       color: var(--text-muted);
       line-height: 1.7;
@@ -434,45 +616,63 @@
     }
     .cs-cover {
       aspect-ratio: 16 / 10;
-    }
-
-    /* Metadata row */
-    .cs-meta {
-      padding: 40px 0;
-      border-bottom: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 32px;
-    }
-    .meta-item h4 {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: var(--font-mono);
       font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .cs-meta {
+      border-bottom: 1px solid var(--border);
+    }
+    .cs-meta-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .meta-box {
+      padding: 32px 0;
+      border-right: 1px solid var(--border);
+      padding-right: 32px;
+      margin-right: 32px;
+    }
+    .meta-box:last-child { border-right: none; }
+    .meta-label {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
       color: var(--text-muted);
       letter-spacing: 0.1em;
       text-transform: uppercase;
       margin-bottom: 8px;
     }
-    .meta-item p {
+    .meta-value {
       font-size: var(--size-body);
       color: var(--text-secondary);
+      line-height: 1.5;
     }
 
-    /* Body content */
     .cs-body {
       max-width: 720px;
       margin: 0 auto;
-      padding: var(--space-section) 32px;
+      padding: var(--space-section) 40px;
       display: flex;
       flex-direction: column;
-      gap: 64px;
+      gap: 56px;
     }
+    /* INTERACTION ZONE: sections reveal on scroll */
     .cs-section h2 {
-      font-size: clamp(22px, 2vw, 28px);
+      font-family: var(--font-display);
+      font-size: 22px;
       font-weight: 400;
       letter-spacing: -0.01em;
-      margin-bottom: 20px;
       padding-bottom: 16px;
       border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
     }
     .cs-section p {
       font-size: var(--size-body);
@@ -480,40 +680,37 @@
       line-height: 1.8;
       margin-bottom: 16px;
     }
-    .cs-section p strong {
-      color: var(--text-primary);
-      font-weight: 500;
-    }
-    /* Full-width image block */
-    .cs-image-full {
-      margin: 0 calc(-1 * (50vw - 360px));
-      aspect-ratio: 16 / 9;
-      /* INTERACTION ZONE: lazy load + blur-up */
-    }
-    .cs-image-caption {
+    .cs-section p strong { color: var(--text-primary); font-weight: 500; }
+    .cs-image {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: var(--font-mono);
-      font-size: 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+    .cs-caption {
+      font-family: var(--font-mono);
+      font-size: 11px;
       color: var(--text-muted);
       text-align: center;
       margin-top: 12px;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
     }
-    /* Callout block */
     .callout {
-      border-left: 2px solid var(--text-muted);
+      border-left: 1px solid var(--border-strong);
       padding: 20px 24px;
       background: var(--surface);
       border-radius: 0 var(--radius) var(--radius) 0;
     }
-    .callout p {
-      color: var(--text-secondary);
-      font-style: italic;
-      margin: 0;
-    }
+    .callout p { color: var(--text-secondary); font-style: italic; margin: 0; }
 
-    /* Next project */
     .cs-next {
-      padding: var(--space-section) 0;
+      padding: 80px 0;
       border-top: 1px solid var(--border);
       text-align: center;
     }
@@ -526,448 +723,516 @@
       margin-bottom: 16px;
     }
     .cs-next-title {
+      font-family: var(--font-display);
       font-size: var(--size-section);
       font-weight: 300;
       letter-spacing: -0.02em;
       cursor: pointer;
       transition: color 0.2s;
+      display: inline-block;
     }
     .cs-next-title:hover { color: var(--text-secondary); }
 
     /* ============================================================
        RESPONSIVE
        ============================================================ */
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .case-card,
       .case-card.alt { grid-template-columns: 1fr; direction: ltr; }
-      .card-image { aspect-ratio: 16 / 9; }
+      .card-image { aspect-ratio: 16/9; border-left: none; border-top: 1px solid var(--border); }
+      .case-card.alt .card-image { border-right: none; border-top: 1px solid var(--border); }
       .about-inner { grid-template-columns: 1fr; gap: 40px; }
-      .cs-hero { grid-template-columns: 1fr; }
-      .cs-meta { grid-template-columns: repeat(2, 1fr); }
-      .cs-image-full { margin: 0; }
+      .lab-inner { grid-template-columns: 1fr; }
+      .metrics-inner { grid-template-columns: repeat(2, 1fr); }
+      .metric-box:nth-child(2) { border-right: none; }
+      .metric-box:nth-child(3) { border-top: 1px solid var(--border); }
+      .metric-box:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+      .cs-hero-inner { grid-template-columns: 1fr; }
+      .cs-meta-inner { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 600px) {
-      :root { --space-section: 64px; }
-      nav { padding: 20px; }
-      footer { flex-direction: column; gap: 24px; text-align: center; }
-      .nav-links { gap: 20px; }
-      .cs-meta { grid-template-columns: 1fr 1fr; }
+      :root { --space-section: 72px; }
+      nav, footer { padding: 20px; }
+      .container { padding: 0 20px; }
+      .hero { padding-bottom: 48px; }
+      .card-text { padding: 32px; }
+      .metric-box { padding: 28px 20px; }
+      .hero-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .contact-links { flex-direction: column; gap: 16px; }
+      .cs-body { padding: 64px 20px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ============================================================
-       NAV
-       ============================================================ -->
-  <nav>
-    <span class="nav-logo">TS</span>
-    <ul class="nav-links">
-      <li><a href="#" onclick="showPage('home')">Work</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#">Resume</a></li>
-    </ul>
-  </nav>
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav aria-label="Main navigation">
+  <span class="nav-logo">TS</span>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home'); return false;">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
 
-  <!-- ============================================================
-       HOME PAGE
-       ============================================================ -->
-  <div id="page-home">
+<!-- ============================================================
+     HOME PAGE
+     ============================================================ -->
+<div id="page-home">
 
-    <!-- HERO -->
-    <!-- INTERACTION ZONE: grid parallax on scroll, scroll-hint fades out -->
-    <section class="hero">
-      <div class="hero-grid"></div>
-      <div class="container hero-content">
-        <h1>Senior product designer focused on enterprise UX and design systems.</h1>
-        <div class="hero-meta">
-          <span class="hero-role">Available for new roles</span>
-          <ul class="hero-socials">
-            <li><a href="#">LinkedIn</a></li>
-            <li><a href="#">Dribbble</a></li>
-            <li><a href="#">Behance</a></li>
-          </ul>
-        </div>
+  <!-- HERO ─────────────────────────────────────────────────── -->
+  <!-- INTERACTION ZONE: grid parallax, name fade+slide on load -->
+  <section class="hero" aria-label="Introduction">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="container hero-content">
+
+      <h1 class="hero-name">Tina Singh</h1>
+
+      <div class="hero-title-row">
+        <span class="hero-title">Senior Product Designer · Design Systems</span>
+        <div class="hero-divider" aria-hidden="true"></div>
       </div>
-      <span class="scroll-hint">Scroll to explore</span>
-    </section>
 
-    <!-- WORK GRID -->
-    <!-- INTERACTION ZONE: each card reveals on scroll (opacity 0→1, translateY 40px→0) -->
-    <section class="work">
-      <div class="container">
-        <div class="section-label">Selected work</div>
-        <div class="work-list">
+      <p class="hero-oneliner">
+        I design the system layer that governs how enterprise software behaves across products, teams, and compliance requirements.
+      </p>
 
-          <!-- Card 1 — text left, image right -->
-          <a class="case-card" href="#" onclick="showCase('nav-redesign'); return false;">
-            <div class="card-text">
-              <span class="card-index">01</span>
-              <h2 class="card-title">Platform Navigation Redesign</h2>
-              <p class="card-subtitle">Systems Architecture for Scalable Usability</p>
-              <div class="card-tags">
-                <span class="tag">UX / Systems</span>
-                <span class="tag">Design Systems</span>
-              </div>
-              <span class="card-cta">View project</span>
-            </div>
-            <!-- PLACEHOLDER: 16:10 cover image -->
-            <div class="placeholder card-image">Cover image — 16:10</div>
-          </a>
-
-          <!-- Card 2 — image left, text right (alt) -->
-          <a class="case-card alt" href="#" onclick="showCase('finance'); return false;">
-            <div class="card-text">
-              <span class="card-index">02</span>
-              <h2 class="card-title">Finance Process in Enterprise Software</h2>
-              <p class="card-subtitle">Dashboard for SAP analytics at McKinsey</p>
-              <div class="card-tags">
-                <span class="tag">UX / UX Research</span>
-                <span class="tag">Enterprise</span>
-              </div>
-              <span class="card-cta">View project</span>
-            </div>
-            <div class="placeholder card-image">Cover image — 16:10</div>
-          </a>
-
-          <!-- Card 3 — text left, image right -->
-          <a class="case-card" href="#" onclick="showCase('login'); return false;">
-            <div class="card-text">
-              <span class="card-index">03</span>
-              <h2 class="card-title">Login Redesign</h2>
-              <p class="card-subtitle">A system fix disguised as a small update</p>
-              <div class="card-tags">
-                <span class="tag">UX / Systems</span>
-                <span class="tag">Design Systems</span>
-              </div>
-              <span class="card-cta">View project</span>
-            </div>
-            <div class="placeholder card-image">Cover image — 16:10</div>
-          </a>
-
-          <!-- Card 4 — image left, text right (alt) -->
-          <a class="case-card alt" href="#" onclick="showCase('schedule'); return false;">
-            <div class="card-text">
-              <span class="card-index">04</span>
-              <h2 class="card-title">Schedule and Constraint Management</h2>
-              <p class="card-subtitle">Solving scheduling gaps with UX</p>
-              <div class="card-tags">
-                <span class="tag">Product Design</span>
-                <span class="tag">Enterprise</span>
-              </div>
-              <span class="card-cta">View project</span>
-            </div>
-            <div class="placeholder card-image">Cover image — 16:10</div>
-          </a>
-
-          <!-- Card 5 — text left, image right -->
-          <a class="case-card" href="#" onclick="showCase('inline-alert'); return false;">
-            <div class="card-text">
-              <span class="card-index">05</span>
-              <h2 class="card-title">Inline Alert</h2>
-              <p class="card-subtitle">Clear system for banners, toasts, and inline alerts</p>
-              <div class="card-tags">
-                <span class="tag">Design Systems</span>
-                <span class="tag">Components</span>
-              </div>
-              <span class="card-cta">View project</span>
-            </div>
-            <div class="placeholder card-image">Cover image — 16:10</div>
-          </a>
-
-        </div>
+      <div class="hero-footer">
+        <span class="hero-status mono">Edmonton, AB &mdash; Open to remote &middot; Available for new roles</span>
+        <ul class="hero-socials" aria-label="Social links">
+          <li><a href="#" aria-label="LinkedIn">LinkedIn</a></li>
+          <li><a href="#" aria-label="Dribbble">Dribbble</a></li>
+          <li><a href="#" aria-label="Behance">Behance</a></li>
+        </ul>
       </div>
-    </section>
 
-    <!-- ABOUT STRIP -->
-    <section class="about-strip" id="about">
-      <div class="container">
-        <div class="about-inner">
-          <h2 class="about-heading">Designing systems that actually work.</h2>
-          <div class="about-body">
-            <p>
-              <!-- COPY PLACEHOLDER: Replace with Notion bio copy -->
-              I'm a senior product designer with a focus on enterprise UX and design systems.
-              I work at the intersection of systems thinking, user research, and implementation —
-              designing products that are clear, predictable, and built to scale.
-            </p>
-            <p>
-              Previously at McKinsey & Company, where I led UX for complex finance and analytics
-              transformations. Currently at BeyondTrust, where I own the Shield Design System
-              and contribute to cross-product consistency at scale.
-            </p>
-            <div class="skills-row">
-              <div class="skill-group">
-                <h4>Design</h4>
-                <ul>
-                  <li>Product design</li>
-                  <li>Design systems</li>
-                  <li>User research</li>
-                  <li>Interaction design</li>
-                </ul>
-              </div>
-              <div class="skill-group">
-                <h4>Engineering</h4>
-                <ul>
-                  <li>Framer</li>
-                  <li>HTML / CSS</li>
-                  <li>Figma tokens</li>
-                  <li>Component specs</li>
-                </ul>
-              </div>
-              <div class="skill-group">
-                <h4>Tools</h4>
-                <ul>
-                  <li>Figma</li>
-                  <li>FigJam</li>
-                  <li>Tokens Studio</li>
-                  <li>Miro / Notion</li>
-                </ul>
-              </div>
-            </div>
+    </div>
+  </section>
+
+  <!-- METRICS STRIP ────────────────────────────────────────── -->
+  <section class="metrics" aria-label="Impact metrics">
+    <div class="metrics-inner">
+      <div class="metric-box">
+        <span class="metric-label">Products</span>
+        <span class="metric-value display">6</span>
+      </div>
+      <div class="metric-box">
+        <span class="metric-label">Teams</span>
+        <span class="metric-value display">11</span>
+      </div>
+      <div class="metric-box">
+        <span class="metric-label">Detach Rate</span>
+        <span class="metric-value display">&lt;1%</span>
+      </div>
+      <div class="metric-box">
+        <span class="metric-label">Compliance</span>
+        <span class="metric-value display" style="font-size: clamp(24px,3vw,40px); padding-top: 8px;">Section 508</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELECTED WORK ────────────────────────────────────────── -->
+  <!-- INTERACTION ZONE: each card reveals on scroll entry -->
+  <section class="work" aria-label="Selected work">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Selected work</span>
+        <div class="section-rule" aria-hidden="true"></div>
+      </div>
+
+      <div class="work-list" role="list">
+
+        <!-- Card 1 — text left, image right -->
+        <article class="case-card" role="listitem" onclick="showCase('ds-rebuild')" tabindex="0" aria-label="Design System Rebuild case study">
+          <div class="card-text">
+            <span class="card-tag">Design Systems</span>
+            <h2 class="card-title">Design System Rebuild</h2>
+            <p class="card-subtitle">40% → &lt;1% detach &nbsp;·&nbsp; 61K+ insertions/quarter &nbsp;·&nbsp; 11 teams</p>
+            <span class="card-cta">View project</span>
+          </div>
+          <!-- PLACEHOLDER: token architecture diagram or component library overview -->
+          <div class="card-image placeholder" aria-hidden="true">Cover — 16:10</div>
+        </article>
+
+        <!-- Card 2 — image left, text right (alt) -->
+        <article class="case-card alt" role="listitem" onclick="showCase('inline-alert')" tabindex="0" aria-label="Inline Alert case study">
+          <div class="card-text">
+            <span class="card-tag">Component Design</span>
+            <h2 class="card-title">Inline Alert</h2>
+            <p class="card-subtitle">70% reduction in banner misuse &nbsp;·&nbsp; 7+ teams adopted</p>
+            <span class="card-cta">View project</span>
+          </div>
+          <!-- PLACEHOLDER: before/after feedback taxonomy or component anatomy -->
+          <div class="card-image placeholder" aria-hidden="true">Cover — 16:10</div>
+        </article>
+
+        <!-- Card 3 — text left, image right -->
+        <article class="case-card" role="listitem" onclick="showCase('nav')" tabindex="0" aria-label="Platform Navigation case study">
+          <div class="card-text">
+            <span class="card-tag">Interaction Architecture</span>
+            <h2 class="card-title">Platform Navigation</h2>
+            <p class="card-subtitle">60% fewer dev support tickets &nbsp;·&nbsp; 100% token compliance</p>
+            <span class="card-cta">View project</span>
+          </div>
+          <!-- PLACEHOLDER: navigation state map or interaction spec -->
+          <div class="card-image placeholder" aria-hidden="true">Cover — 16:10</div>
+        </article>
+
+        <!-- Card 4 — image left, text right (alt) -->
+        <article class="case-card alt" role="listitem" onclick="showCase('login')" tabindex="0" aria-label="Login Redesign case study">
+          <div class="card-text">
+            <span class="card-tag">Product Design</span>
+            <h2 class="card-title">Login Redesign</h2>
+            <p class="card-subtitle">Unblocked a 2-year stalled project in 4 weeks</p>
+            <span class="card-cta">View project</span>
+          </div>
+          <!-- PLACEHOLDER: login flow comparison or decision log -->
+          <div class="card-image placeholder" aria-hidden="true">Cover — 16:10</div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT / BIO ──────────────────────────────────────────── -->
+  <section class="about" id="about" aria-label="About">
+    <div class="container">
+      <div class="about-inner">
+        <h2 class="about-heading">I think in systems, not screens.</h2>
+        <div class="about-right">
+          <p class="about-bio">
+            Three years building and governing a design system for an enterprise cybersecurity company ($400M+ ARR) that sells to every US cabinet-level agency. 6 products, 11 teams, 791 design tokens.
+          </p>
+          <div class="specializations" role="list" aria-label="Specializations">
+            <div class="spec-item" role="listitem">Design Systems</div>
+            <div class="spec-item" role="listitem">Enterprise UX</div>
+            <div class="spec-item" role="listitem">AI-Augmented Workflows</div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- FOOTER -->
-    <footer>
-      <span class="footer-name">Tina Singh — 2025</span>
-      <ul class="footer-links">
-        <li><a href="#">LinkedIn</a></li>
-        <li><a href="#">Dribbble</a></li>
-        <li><a href="#">Resume</a></li>
-        <li><a href="mailto:hello@tinasingh.co">Contact</a></li>
-      </ul>
-    </footer>
-
-  </div><!-- /page-home -->
-
-
-  <!-- ============================================================
-       CASE STUDY PAGE TEMPLATE
-       One template — all 5 studies use the same structure.
-       In Framer this becomes a CMS-driven template.
-       ============================================================ -->
-  <div id="page-case" class="case-study-page">
+  <!-- LAB / CURIOSITY TEASER ───────────────────────────────── -->
+  <section class="lab" aria-label="Lab project">
     <div class="container">
-
-      <!-- HERO -->
-      <!-- INTERACTION ZONE: cover image fade-in on load -->
-      <div class="cs-hero">
-        <div class="cs-hero-text">
-          <p class="cs-label" id="cs-label">01 — UX / Systems</p>
-          <h1 id="cs-title">Platform Navigation Redesign</h1>
-          <p class="subtitle" id="cs-subtitle">Systems Architecture for Scalable Usability</p>
+      <div class="lab-inner">
+        <div>
+          <p class="lab-tag">Lab</p>
+          <h2 class="lab-title">The Behavior Layer</h2>
+          <p class="lab-subtitle">
+            A timeline of how interfaces, human roles, and design systems shift as AI becomes infrastructure.
+          </p>
+          <a href="#" class="lab-link">Explore the timeline</a>
         </div>
-        <!-- PLACEHOLDER: 16:10 cover -->
-        <div class="placeholder cs-cover">Cover image — 16:10</div>
+        <!-- PLACEHOLDER: timeline visual or abstract diagram -->
+        <div class="lab-visual" aria-hidden="true">Timeline visual — 4:3</div>
       </div>
-
-      <!-- METADATA ROW -->
-      <div class="cs-meta">
-        <div class="meta-item">
-          <h4>Role</h4>
-          <p id="cs-role">UX Designer, Design Systems</p>
-        </div>
-        <div class="meta-item">
-          <h4>Tools</h4>
-          <p id="cs-tools">Figma, FigJam, Design System</p>
-        </div>
-        <div class="meta-item">
-          <h4>Team</h4>
-          <p id="cs-team">Product Manager, Engineers, QA</p>
-        </div>
-        <div class="meta-item">
-          <h4>Timeline</h4>
-          <p id="cs-timeline">6 months</p>
-        </div>
-      </div>
-
     </div>
+  </section>
 
-    <!-- BODY — max-width 720px centered -->
-    <!-- INTERACTION ZONE: sections reveal on scroll (opacity + translateY) -->
-    <div class="cs-body">
-
-      <div class="cs-section">
-        <h2>Overview</h2>
-        <!-- COPY PLACEHOLDER -->
-        <p>Replace with project overview from Notion. One or two paragraphs covering the context, the team, and the core challenge.</p>
-      </div>
-
-      <!-- Full-width image -->
-      <!-- PLACEHOLDER: 16:9, lazy + blur-up in Framer -->
-      <div>
-        <div class="placeholder cs-image-full" style="aspect-ratio:16/9;">Screenshot or mockup — 16:9</div>
-        <p class="cs-image-caption">Caption describing what is shown</p>
-      </div>
-
-      <div class="cs-section">
-        <h2>The Problem</h2>
-        <p>Replace with problem statement from Notion. Lead with one sentence. Users experienced [X], which caused [Y]. </p>
-        <div class="callout">
-          <p>Key insight or design principle worth highlighting. One sentence, stated plainly.</p>
-        </div>
-      </div>
-
-      <div class="cs-section">
-        <h2>Research</h2>
-        <p>Replace with research section from Notion.</p>
-        <!-- PLACEHOLDER: research artifact image -->
-        <div class="placeholder" style="aspect-ratio:4/3; margin-top:24px;">Research artifact — 4:3</div>
-        <p class="cs-image-caption">Affinity mapping / interview synthesis / journey map</p>
-      </div>
-
-      <div class="cs-section">
-        <h2>Design Decisions</h2>
-        <p>Replace with approach and key decisions from Notion. <strong>Bold</strong> key decisions so skimmers can navigate.</p>
-        <div class="placeholder" style="aspect-ratio:16/9; margin-top:24px;">Design explorations — 16:9</div>
-        <p class="cs-image-caption">Design explorations or before/after comparison</p>
-      </div>
-
-      <div class="cs-section">
-        <h2>Outcome</h2>
-        <p>Replace with outcomes. Quantify where possible. Focus on what changed for users, not just what was shipped.</p>
-      </div>
-
-    </div>
-
-    <!-- NEXT PROJECT -->
+  <!-- CONTACT / CTA ────────────────────────────────────────── -->
+  <section class="contact" id="contact" aria-label="Contact">
     <div class="container">
-      <div class="cs-next">
-        <p class="cs-next-label">Next project</p>
-        <p class="cs-next-title" id="cs-next" onclick="showCase('finance')">Finance Process in Enterprise Software →</p>
+      <h2 class="contact-headline">Let's talk about systems.</h2>
+      <p class="contact-body">
+        Looking for senior design systems and product design roles at companies that take infrastructure seriously.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:" class="contact-link">Email</a>
+        <a href="#" class="contact-link">LinkedIn</a>
+        <a href="#" class="contact-link">Resume</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER ───────────────────────────────────────────────── -->
+  <footer>
+    <span class="footer-copy mono">Tina Singh — 2025</span>
+    <ul class="footer-links">
+      <li><a href="#" onclick="showPage('home'); return false;">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </footer>
+
+</div><!-- /page-home -->
+
+
+<!-- ============================================================
+     CASE STUDY TEMPLATE
+     CMS-driven in Framer — one template, all case studies.
+     ============================================================ -->
+<div id="page-case">
+
+  <div class="container">
+    <!-- Back link -->
+    <div class="cs-back mono" onclick="showPage('home')" role="button" tabindex="0" aria-label="Back to work">Back to work</div>
+
+    <!-- CASE STUDY HERO -->
+    <div class="cs-hero">
+      <div class="cs-hero-inner">
+        <div>
+          <p class="cs-tag" id="cs-tag">Design Systems</p>
+          <h1 id="cs-title">Design System Rebuild</h1>
+          <p class="cs-subtitle" id="cs-subtitle">
+            <!-- populated by JS -->
+          </p>
+        </div>
+        <!-- PLACEHOLDER: 16:10 cover — INTERACTION ZONE: fade-in on load -->
+        <div class="cs-cover" aria-hidden="true">Cover image — 16:10</div>
       </div>
     </div>
 
-    <!-- FOOTER (repeated) -->
-    <footer>
-      <span class="footer-name">Tina Singh — 2025</span>
-      <ul class="footer-links">
-        <li><a href="#" onclick="showPage('home')">Work</a></li>
-        <li><a href="#">LinkedIn</a></li>
-        <li><a href="#">Resume</a></li>
-        <li><a href="mailto:hello@tinasingh.co">Contact</a></li>
-      </ul>
-    </footer>
+    <!-- METADATA ROW -->
+    <div class="cs-meta">
+      <div class="cs-meta-inner">
+        <div class="meta-box">
+          <p class="meta-label">Role</p>
+          <p class="meta-value" id="cs-role">—</p>
+        </div>
+        <div class="meta-box">
+          <p class="meta-label">Tools</p>
+          <p class="meta-value" id="cs-tools">—</p>
+        </div>
+        <div class="meta-box">
+          <p class="meta-label">Team</p>
+          <p class="meta-value" id="cs-team">—</p>
+        </div>
+        <div class="meta-box">
+          <p class="meta-label">Timeline</p>
+          <p class="meta-value" id="cs-timeline">—</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  </div><!-- /page-case -->
+  <!-- BODY CONTENT — max 720px centered -->
+  <!-- INTERACTION ZONE: each section reveals on scroll -->
+  <div class="cs-body">
+
+    <div class="cs-section">
+      <h2>Overview</h2>
+      <p id="cs-overview">Replace with overview from Notion export.</p>
+    </div>
+
+    <div class="cs-image placeholder" style="aspect-ratio:16/9;" aria-hidden="true">Screenshot or mockup — 16:9</div>
+
+    <div class="cs-section">
+      <h2>The Problem</h2>
+      <p>Replace with problem statement. Lead with one sentence. What was failing and why did it matter.</p>
+      <div class="callout">
+        <p>Key insight or design principle worth highlighting. One sentence, stated plainly.</p>
+      </div>
+    </div>
+
+    <div class="cs-section">
+      <h2>Research</h2>
+      <p>Replace with research section from Notion.</p>
+      <div class="cs-image placeholder" style="aspect-ratio:4/3; margin-top:24px;" aria-hidden="true">Research artifact — 4:3</div>
+      <p class="cs-caption">Affinity map / interview synthesis / journey map</p>
+    </div>
+
+    <div class="cs-section">
+      <h2>Design Decisions</h2>
+      <p>Replace with approach and key decisions. <strong>Bold key decisions</strong> so skimmers can navigate.</p>
+      <div class="cs-image placeholder" style="aspect-ratio:16/9; margin-top:24px;" aria-hidden="true">Design explorations — 16:9</div>
+      <p class="cs-caption">Before / after comparison or exploration set</p>
+    </div>
+
+    <div class="cs-section">
+      <h2>Outcome</h2>
+      <p>Replace with outcomes. Quantify where possible. Focus on what changed for users, not just what was shipped.</p>
+    </div>
+
+  </div>
+
+  <!-- NEXT PROJECT -->
+  <div class="container">
+    <div class="cs-next">
+      <p class="cs-next-label">Next project</p>
+      <span class="cs-next-title" id="cs-next-title" role="button" tabindex="0">—</span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-copy mono">Tina Singh — 2025</span>
+    <ul class="footer-links">
+      <li><a href="#" onclick="showPage('home'); return false;">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </footer>
+
+</div><!-- /page-case -->
 
 
-  <!-- ============================================================
-       SCROLL PARALLAX + PAGE NAVIGATION
-       Lightweight vanilla JS — no dependencies.
-       In Framer this is replaced by native scroll components.
-       ============================================================ -->
-  <script>
-    // ── Simple page router ──
-    const cases = {
-      'nav-redesign': {
-        label: '01 — UX / Systems',
-        title: 'Platform Navigation Redesign',
-        subtitle: 'Systems Architecture for Scalable Usability',
-        role: 'UX Designer, Design Systems',
-        tools: 'Figma, FigJam, Design System',
-        team: 'PM, Engineers, QA',
-        timeline: '6 months',
-        next: 'finance',
-        nextTitle: 'Finance Process in Enterprise Software →'
-      },
-      'finance': {
-        label: '02 — UX / UX Research',
-        title: 'Finance Process in Enterprise Software',
-        subtitle: 'Dashboard for SAP analytics at McKinsey',
-        role: 'User Researcher & Strategist, UX/UI Design',
-        tools: 'Figma, Miro, Sketch, Zoom',
-        team: 'PM (Finance), SAP Devs, Finance Analysts',
-        timeline: '4 months',
-        next: 'login',
-        nextTitle: 'Login Redesign →'
-      },
-      'login': {
-        label: '03 — UX / Systems',
-        title: 'Login Redesign',
-        subtitle: 'A system fix disguised as a small update',
-        role: 'UX Designer, Design Systems',
-        tools: 'Figma, FigJam, Design System Library',
-        team: 'Product Manager, Engineers, QA, Solution Engineers',
-        timeline: 'June – July 2025',
-        next: 'schedule',
-        nextTitle: 'Schedule and Constraint Management →'
-      },
-      'schedule': {
-        label: '04 — Product Design',
-        title: 'Schedule and Constraint Management',
-        subtitle: 'Solving scheduling gaps with UX',
-        role: 'Product Designer',
-        tools: 'Figma, FigJam',
-        team: 'PM, Engineers',
-        timeline: '3 months',
-        next: 'inline-alert',
-        nextTitle: 'Inline Alert →'
-      },
-      'inline-alert': {
-        label: '05 — Design Systems',
-        title: 'Inline Alert',
-        subtitle: 'Clear system for banners, toasts, and inline alerts',
-        role: 'Design Systems, UX',
-        tools: 'Figma, Tokens Studio',
-        team: '5+ product teams',
-        timeline: 'Feb – May 2025',
-        next: 'nav-redesign',
-        nextTitle: 'Platform Navigation Redesign →'
-      }
-    };
-
-    function showCase(slug) {
-      const data = cases[slug];
-      if (!data) return;
-      document.getElementById('cs-label').textContent    = data.label;
-      document.getElementById('cs-title').textContent    = data.title;
-      document.getElementById('cs-subtitle').textContent = data.subtitle;
-      document.getElementById('cs-role').textContent     = data.role;
-      document.getElementById('cs-tools').textContent    = data.tools;
-      document.getElementById('cs-team').textContent     = data.team;
-      document.getElementById('cs-timeline').textContent = data.timeline;
-      document.getElementById('cs-next').textContent     = data.nextTitle;
-      document.getElementById('cs-next').onclick = () => showCase(data.next);
-      showPage('case');
+<!-- ============================================================
+     JS — Router + Scroll effects
+     No dependencies. In Framer, replace with native components.
+     ============================================================ -->
+<script>
+  /* ── Case study data ── */
+  const CASES = {
+    'ds-rebuild': {
+      tag: 'Design Systems',
+      title: 'Design System Rebuild',
+      subtitle: '40% → <1% detach rate. 61K+ insertions per quarter. 11 teams.',
+      role: 'Design Systems Lead',
+      tools: 'Figma, Tokens Studio, GitHub',
+      team: '11 product teams, Engineering, QA',
+      timeline: '3 years (ongoing)',
+      overview: 'Three years building and governing a design system for an enterprise cybersecurity company that sells to every US cabinet-level agency. 6 products, 11 teams, 791 design tokens.',
+      next: 'inline-alert',
+      nextTitle: 'Inline Alert →'
+    },
+    'inline-alert': {
+      tag: 'Component Design',
+      title: 'Inline Alert',
+      subtitle: '70% reduction in banner misuse. 7+ teams adopted.',
+      role: 'UX Designer, Design Systems',
+      tools: 'Figma, Tokens Studio',
+      team: '5+ product teams',
+      timeline: 'Feb – May 2025',
+      overview: 'In complex workflows, users were overlooking critical errors because the system used global banners for everything. I introduced the Inline Alert — a dedicated pattern for contextual feedback at the point of decision.',
+      next: 'nav',
+      nextTitle: 'Platform Navigation →'
+    },
+    'nav': {
+      tag: 'Interaction Architecture',
+      title: 'Platform Navigation',
+      subtitle: '60% fewer dev support tickets. 100% token compliance.',
+      role: 'UX Designer, Design Systems',
+      tools: 'Figma, FigJam',
+      team: 'PM, Engineering, QA',
+      timeline: '6 months',
+      overview: 'Redesigned platform navigation to foster consistency, scalability, and developer clarity across all products.',
+      next: 'login',
+      nextTitle: 'Login Redesign →'
+    },
+    'login': {
+      tag: 'Product Design',
+      title: 'Login Redesign',
+      subtitle: 'Unblocked a 2-year stalled project in 4 weeks.',
+      role: 'UX Designer, Design Systems',
+      tools: 'Figma, FigJam, Design System Library',
+      team: 'Product Manager, Engineers, QA, Solution Engineers',
+      timeline: 'June – July 2025',
+      overview: 'The login redesign had not moved forward since 2023. Designs existed, but key behaviors were unclear, which made the flow hard to build and confusing for users. My focus was not visual polish — it was making the experience understandable, predictable, and aligned with how authentication actually works.',
+      next: 'ds-rebuild',
+      nextTitle: 'Design System Rebuild →'
     }
+  };
 
-    function showPage(p) {
-      document.getElementById('page-home').style.display = p === 'home' ? 'block' : 'none';
-      document.getElementById('page-case').style.display = p === 'case' ? 'block' : 'none';
-      window.scrollTo(0, 0);
+  function showCase(slug) {
+    const d = CASES[slug];
+    if (!d) return;
+    document.getElementById('cs-tag').textContent      = d.tag;
+    document.getElementById('cs-title').textContent    = d.title;
+    document.getElementById('cs-subtitle').innerHTML   = d.subtitle;
+    document.getElementById('cs-role').textContent     = d.role;
+    document.getElementById('cs-tools').textContent    = d.tools;
+    document.getElementById('cs-team').textContent     = d.team;
+    document.getElementById('cs-timeline').textContent = d.timeline;
+    document.getElementById('cs-overview').textContent = d.overview;
+    const nextEl = document.getElementById('cs-next-title');
+    nextEl.textContent = d.nextTitle;
+    nextEl.onclick = () => showCase(d.next);
+    showPage('case');
+  }
+
+  function showPage(p) {
+    if (prefersReducedMotion) {
+      _applyPage(p);
+      return;
     }
+    /* Fade to black → swap → fade in */
+    overlay.style.pointerEvents = 'all';
+    overlay.style.opacity = '1';
+    setTimeout(() => {
+      _applyPage(p);
+      setTimeout(() => {
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+      }, 60);
+    }, 350);
+  }
 
-    // ── Hero grid parallax ──
-    const grid = document.querySelector('.hero-grid');
-    const scrollHint = document.querySelector('.scroll-hint');
+  function _applyPage(p) {
+    document.getElementById('page-home').style.display = p === 'home' ? 'block' : 'none';
+    document.getElementById('page-case').style.display = p === 'case' ? 'block' : 'none';
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+
+  /* ── Page transition overlay ── */
+  const overlay = document.createElement('div');
+  overlay.style.cssText = `
+    position: fixed; inset: 0; background: #000;
+    opacity: 0; pointer-events: none;
+    z-index: 9999;
+    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  `;
+  document.body.appendChild(overlay);
+
+  /* ── Hero parallax (respects reduced-motion) ── */
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const heroGrid = document.querySelector('.hero-grid');
+  if (!prefersReducedMotion && heroGrid) {
     window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      if (grid) grid.style.transform = `translateY(${y * 0.15}px)`;
-      if (scrollHint) scrollHint.style.opacity = Math.max(0, 1 - y / 200);
+      heroGrid.style.transform = `translateY(${window.scrollY * 0.12}px)`;
     }, { passive: true });
+  }
 
-    // ── Scroll reveal for cards ──
-    const revealObserver = new IntersectionObserver((entries) => {
+  /* ── Scroll reveal for work cards ── */
+  if (!prefersReducedMotion) {
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.style.opacity = '1';
           e.target.style.transform = 'translateY(0)';
+          observer.unobserve(e.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.08 });
 
-    document.querySelectorAll('.case-card').forEach(card => {
+    document.querySelectorAll('.case-card').forEach((card, i) => {
       card.style.opacity = '0';
-      card.style.transform = 'translateY(40px)';
-      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease, border-color 0.3s';
-      revealObserver.observe(card);
+      card.style.transform = 'translateY(32px)';
+      card.style.transition = `opacity 0.55s ${i * 0.08}s ease, transform 0.55s ${i * 0.08}s ease, border-color 0.3s`;
+      observer.observe(card);
     });
-  </script>
+  }
+
+  /* ── Hero name entrance animation ── */
+  if (!prefersReducedMotion) {
+    const heroName = document.querySelector('.hero-name');
+    const heroOneliner = document.querySelector('.hero-oneliner');
+    const heroTitleRow = document.querySelector('.hero-title-row');
+    [heroName, heroTitleRow, heroOneliner].forEach((el, i) => {
+      if (!el) return;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = `opacity 0.7s ${0.1 + i * 0.12}s ease, transform 0.7s ${0.1 + i * 0.12}s ease`;
+    });
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      [heroName, heroTitleRow, heroOneliner].forEach(el => {
+        if (!el) return;
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      });
+    }));
+  }
+
+  /* ── Keyboard support for cards ── */
+  document.querySelectorAll('.case-card').forEach(card => {
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') card.click();
+    });
+  });
+</script>
 
 </body>
 </html>
