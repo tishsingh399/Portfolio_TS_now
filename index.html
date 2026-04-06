@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tina Singh — Senior Product Designer</title>
+  <style>
+    /* ============================================================
+       BRAND TOKENS
+       ============================================================ */
+    :root {
+      --bg:         #0A0A0A;
+      --surface:    #1E1E1E;
+      --border:     #2A2A2A;
+      --text-primary:   #FFFFFF;
+      --text-secondary: #D9D9D9;
+      --text-muted:     #616060;
+
+      --font-display: 'Apercu', 'Inter', sans-serif;
+      --font-mono:    'Apercu Mono', 'JetBrains Mono', monospace;
+
+      --size-hero:    clamp(52px, 7vw, 96px);
+      --size-section: clamp(36px, 4.5vw, 64px);
+      --size-card:    clamp(22px, 2.5vw, 32px);
+      --size-body:    clamp(15px, 1.1vw, 17px);
+      --size-meta:    13px;
+
+      --space-section: 128px;
+      --space-card-gap: 32px;
+      --max-width: 1200px;
+      --radius: 4px;
+    }
+
+    /* ============================================================
+       RESET
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-display);
+      font-size: var(--size-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; width: 100%; }
+
+    /* ============================================================
+       LAYOUT UTILITIES
+       ============================================================ */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+    .placeholder {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ============================================================
+       NAV
+       ============================================================ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      /* INTERACTION ZONE: blur background on scroll */
+    }
+    .nav-logo {
+      font-size: 15px;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+      letter-spacing: 0.08em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+
+    /* ============================================================
+       HERO — full viewport
+       INTERACTION ZONE: subtle grid parallax on scroll (depth cue)
+       ============================================================ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: var(--space-section);
+      position: relative;
+      overflow: hidden;
+    }
+    /* Grid overlay — parallax layer */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+      /* INTERACTION ZONE: translateY(−20px) on scroll via JS */
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    .hero h1 {
+      font-size: var(--size-hero);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      max-width: 900px;
+      margin-bottom: 48px;
+    }
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    .hero-role {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .hero-socials {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+    }
+    .hero-socials a {
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .hero-socials a:hover { color: var(--text-primary); }
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      right: 32px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      /* INTERACTION ZONE: fade out on scroll */
+    }
+
+    /* ============================================================
+       WORK SECTION
+       ============================================================ */
+    .work {
+      padding: var(--space-section) 0;
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 64px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Case study cards — Kunai-style alternating layout */
+    .work-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-card-gap);
+    }
+    .case-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      padding: 48px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 0.3s;
+      /* INTERACTION ZONE: opacity + translateY reveal on scroll entry */
+      cursor: pointer;
+    }
+    .case-card:hover { border-color: #444; }
+    /* Alternate: text left / image right  ↕  image left / text right */
+    .case-card.alt { direction: rtl; }
+    .case-card.alt > * { direction: ltr; }
+
+    .card-text { display: flex; flex-direction: column; gap: 16px; }
+    .card-index {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+    .card-title {
+      font-size: var(--size-card);
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+    }
+    .card-subtitle {
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      line-height: 1.5;
+      max-width: 380px;
+    }
+    .card-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 4px 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .card-cta {
+      margin-top: 24px;
+      font-size: var(--size-meta);
+      color: var(--text-secondary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap 0.2s;
+    }
+    .case-card:hover .card-cta { gap: 16px; }
+    .card-cta::after { content: '→'; }
+
+    /* Image placeholder — 16:9 aspect */
+    .card-image {
+      aspect-ratio: 16 / 10;
+    }
+
+    /* ============================================================
+       ABOUT STRIP
+       ============================================================ */
+    .about-strip {
+      padding: var(--space-section) 0;
+      border-top: 1px solid var(--border);
+    }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-heading {
+      font-size: var(--size-section);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .about-body {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .about-body p {
+      font-size: var(--size-body);
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+    .skills-row {
+      display: flex;
+      gap: 48px;
+      margin-top: 16px;
+    }
+    .skill-group h4 {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .skill-group ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .skill-group li {
+      font-size: var(--size-body);
+      color: var(--text-secondary);
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    footer {
+      padding: 48px 32px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-name {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+    .footer-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-primary); }
+
+    /* ============================================================
+       CASE STUDY PAGE  (hidden by default — shown via JS hash nav)
+       ============================================================ */
+    .case-study-page {
+      display: none;
+      padding-top: 80px; /* nav height offset */
+    }
+    .case-study-page.active { display: block; }
+
+    .cs-hero {
+      min-height: 60vh;
+      padding: var(--space-section) 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .cs-hero-text {}
+    .cs-label {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .cs-hero h1 {
+      font-size: clamp(36px, 4vw, 64px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .cs-hero .subtitle {
+      font-size: var(--size-body);
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 440px;
+    }
+    .cs-cover {
+      aspect-ratio: 16 / 10;
+    }
+
+    /* Metadata row */
+    .cs-meta {
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+    .meta-item h4 {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .meta-item p {
+      font-size: var(--size-body);
+      color: var(--text-secondary);
+    }
+
+    /* Body content */
+    .cs-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: var(--space-section) 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 64px;
+    }
+    .cs-section h2 {
+      font-size: clamp(22px, 2vw, 28px);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .cs-section p {
+      font-size: var(--size-body);
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+    .cs-section p strong {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+    /* Full-width image block */
+    .cs-image-full {
+      margin: 0 calc(-1 * (50vw - 360px));
+      aspect-ratio: 16 / 9;
+      /* INTERACTION ZONE: lazy load + blur-up */
+    }
+    .cs-image-caption {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 12px;
+      letter-spacing: 0.05em;
+    }
+    /* Callout block */
+    .callout {
+      border-left: 2px solid var(--text-muted);
+      padding: 20px 24px;
+      background: var(--surface);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .callout p {
+      color: var(--text-secondary);
+      font-style: italic;
+      margin: 0;
+    }
+
+    /* Next project */
+    .cs-next {
+      padding: var(--space-section) 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .cs-next-label {
+      font-family: var(--font-mono);
+      font-size: var(--size-meta);
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .cs-next-title {
+      font-size: var(--size-section);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .cs-next-title:hover { color: var(--text-secondary); }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 900px) {
+      .case-card,
+      .case-card.alt { grid-template-columns: 1fr; direction: ltr; }
+      .card-image { aspect-ratio: 16 / 9; }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .cs-hero { grid-template-columns: 1fr; }
+      .cs-meta { grid-template-columns: repeat(2, 1fr); }
+      .cs-image-full { margin: 0; }
+    }
+    @media (max-width: 600px) {
+      :root { --space-section: 64px; }
+      nav { padding: 20px; }
+      footer { flex-direction: column; gap: 24px; text-align: center; }
+      .nav-links { gap: 20px; }
+      .cs-meta { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAV
+       ============================================================ -->
+  <nav>
+    <span class="nav-logo">TS</span>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('home')">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#">Resume</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- ============================================================
+       HOME PAGE
+       ============================================================ -->
+  <div id="page-home">
+
+    <!-- HERO -->
+    <!-- INTERACTION ZONE: grid parallax on scroll, scroll-hint fades out -->
+    <section class="hero">
+      <div class="hero-grid"></div>
+      <div class="container hero-content">
+        <h1>Senior product designer focused on enterprise UX and design systems.</h1>
+        <div class="hero-meta">
+          <span class="hero-role">Available for new roles</span>
+          <ul class="hero-socials">
+            <li><a href="#">LinkedIn</a></li>
+            <li><a href="#">Dribbble</a></li>
+            <li><a href="#">Behance</a></li>
+          </ul>
+        </div>
+      </div>
+      <span class="scroll-hint">Scroll to explore</span>
+    </section>
+
+    <!-- WORK GRID -->
+    <!-- INTERACTION ZONE: each card reveals on scroll (opacity 0→1, translateY 40px→0) -->
+    <section class="work">
+      <div class="container">
+        <div class="section-label">Selected work</div>
+        <div class="work-list">
+
+          <!-- Card 1 — text left, image right -->
+          <a class="case-card" href="#" onclick="showCase('nav-redesign'); return false;">
+            <div class="card-text">
+              <span class="card-index">01</span>
+              <h2 class="card-title">Platform Navigation Redesign</h2>
+              <p class="card-subtitle">Systems Architecture for Scalable Usability</p>
+              <div class="card-tags">
+                <span class="tag">UX / Systems</span>
+                <span class="tag">Design Systems</span>
+              </div>
+              <span class="card-cta">View project</span>
+            </div>
+            <!-- PLACEHOLDER: 16:10 cover image -->
+            <div class="placeholder card-image">Cover image — 16:10</div>
+          </a>
+
+          <!-- Card 2 — image left, text right (alt) -->
+          <a class="case-card alt" href="#" onclick="showCase('finance'); return false;">
+            <div class="card-text">
+              <span class="card-index">02</span>
+              <h2 class="card-title">Finance Process in Enterprise Software</h2>
+              <p class="card-subtitle">Dashboard for SAP analytics at McKinsey</p>
+              <div class="card-tags">
+                <span class="tag">UX / UX Research</span>
+                <span class="tag">Enterprise</span>
+              </div>
+              <span class="card-cta">View project</span>
+            </div>
+            <div class="placeholder card-image">Cover image — 16:10</div>
+          </a>
+
+          <!-- Card 3 — text left, image right -->
+          <a class="case-card" href="#" onclick="showCase('login'); return false;">
+            <div class="card-text">
+              <span class="card-index">03</span>
+              <h2 class="card-title">Login Redesign</h2>
+              <p class="card-subtitle">A system fix disguised as a small update</p>
+              <div class="card-tags">
+                <span class="tag">UX / Systems</span>
+                <span class="tag">Design Systems</span>
+              </div>
+              <span class="card-cta">View project</span>
+            </div>
+            <div class="placeholder card-image">Cover image — 16:10</div>
+          </a>
+
+          <!-- Card 4 — image left, text right (alt) -->
+          <a class="case-card alt" href="#" onclick="showCase('schedule'); return false;">
+            <div class="card-text">
+              <span class="card-index">04</span>
+              <h2 class="card-title">Schedule and Constraint Management</h2>
+              <p class="card-subtitle">Solving scheduling gaps with UX</p>
+              <div class="card-tags">
+                <span class="tag">Product Design</span>
+                <span class="tag">Enterprise</span>
+              </div>
+              <span class="card-cta">View project</span>
+            </div>
+            <div class="placeholder card-image">Cover image — 16:10</div>
+          </a>
+
+          <!-- Card 5 — text left, image right -->
+          <a class="case-card" href="#" onclick="showCase('inline-alert'); return false;">
+            <div class="card-text">
+              <span class="card-index">05</span>
+              <h2 class="card-title">Inline Alert</h2>
+              <p class="card-subtitle">Clear system for banners, toasts, and inline alerts</p>
+              <div class="card-tags">
+                <span class="tag">Design Systems</span>
+                <span class="tag">Components</span>
+              </div>
+              <span class="card-cta">View project</span>
+            </div>
+            <div class="placeholder card-image">Cover image — 16:10</div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT STRIP -->
+    <section class="about-strip" id="about">
+      <div class="container">
+        <div class="about-inner">
+          <h2 class="about-heading">Designing systems that actually work.</h2>
+          <div class="about-body">
+            <p>
+              <!-- COPY PLACEHOLDER: Replace with Notion bio copy -->
+              I'm a senior product designer with a focus on enterprise UX and design systems.
+              I work at the intersection of systems thinking, user research, and implementation —
+              designing products that are clear, predictable, and built to scale.
+            </p>
+            <p>
+              Previously at McKinsey & Company, where I led UX for complex finance and analytics
+              transformations. Currently at BeyondTrust, where I own the Shield Design System
+              and contribute to cross-product consistency at scale.
+            </p>
+            <div class="skills-row">
+              <div class="skill-group">
+                <h4>Design</h4>
+                <ul>
+                  <li>Product design</li>
+                  <li>Design systems</li>
+                  <li>User research</li>
+                  <li>Interaction design</li>
+                </ul>
+              </div>
+              <div class="skill-group">
+                <h4>Engineering</h4>
+                <ul>
+                  <li>Framer</li>
+                  <li>HTML / CSS</li>
+                  <li>Figma tokens</li>
+                  <li>Component specs</li>
+                </ul>
+              </div>
+              <div class="skill-group">
+                <h4>Tools</h4>
+                <ul>
+                  <li>Figma</li>
+                  <li>FigJam</li>
+                  <li>Tokens Studio</li>
+                  <li>Miro / Notion</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <span class="footer-name">Tina Singh — 2025</span>
+      <ul class="footer-links">
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Dribbble</a></li>
+        <li><a href="#">Resume</a></li>
+        <li><a href="mailto:hello@tinasingh.co">Contact</a></li>
+      </ul>
+    </footer>
+
+  </div><!-- /page-home -->
+
+
+  <!-- ============================================================
+       CASE STUDY PAGE TEMPLATE
+       One template — all 5 studies use the same structure.
+       In Framer this becomes a CMS-driven template.
+       ============================================================ -->
+  <div id="page-case" class="case-study-page">
+    <div class="container">
+
+      <!-- HERO -->
+      <!-- INTERACTION ZONE: cover image fade-in on load -->
+      <div class="cs-hero">
+        <div class="cs-hero-text">
+          <p class="cs-label" id="cs-label">01 — UX / Systems</p>
+          <h1 id="cs-title">Platform Navigation Redesign</h1>
+          <p class="subtitle" id="cs-subtitle">Systems Architecture for Scalable Usability</p>
+        </div>
+        <!-- PLACEHOLDER: 16:10 cover -->
+        <div class="placeholder cs-cover">Cover image — 16:10</div>
+      </div>
+
+      <!-- METADATA ROW -->
+      <div class="cs-meta">
+        <div class="meta-item">
+          <h4>Role</h4>
+          <p id="cs-role">UX Designer, Design Systems</p>
+        </div>
+        <div class="meta-item">
+          <h4>Tools</h4>
+          <p id="cs-tools">Figma, FigJam, Design System</p>
+        </div>
+        <div class="meta-item">
+          <h4>Team</h4>
+          <p id="cs-team">Product Manager, Engineers, QA</p>
+        </div>
+        <div class="meta-item">
+          <h4>Timeline</h4>
+          <p id="cs-timeline">6 months</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BODY — max-width 720px centered -->
+    <!-- INTERACTION ZONE: sections reveal on scroll (opacity + translateY) -->
+    <div class="cs-body">
+
+      <div class="cs-section">
+        <h2>Overview</h2>
+        <!-- COPY PLACEHOLDER -->
+        <p>Replace with project overview from Notion. One or two paragraphs covering the context, the team, and the core challenge.</p>
+      </div>
+
+      <!-- Full-width image -->
+      <!-- PLACEHOLDER: 16:9, lazy + blur-up in Framer -->
+      <div>
+        <div class="placeholder cs-image-full" style="aspect-ratio:16/9;">Screenshot or mockup — 16:9</div>
+        <p class="cs-image-caption">Caption describing what is shown</p>
+      </div>
+
+      <div class="cs-section">
+        <h2>The Problem</h2>
+        <p>Replace with problem statement from Notion. Lead with one sentence. Users experienced [X], which caused [Y]. </p>
+        <div class="callout">
+          <p>Key insight or design principle worth highlighting. One sentence, stated plainly.</p>
+        </div>
+      </div>
+
+      <div class="cs-section">
+        <h2>Research</h2>
+        <p>Replace with research section from Notion.</p>
+        <!-- PLACEHOLDER: research artifact image -->
+        <div class="placeholder" style="aspect-ratio:4/3; margin-top:24px;">Research artifact — 4:3</div>
+        <p class="cs-image-caption">Affinity mapping / interview synthesis / journey map</p>
+      </div>
+
+      <div class="cs-section">
+        <h2>Design Decisions</h2>
+        <p>Replace with approach and key decisions from Notion. <strong>Bold</strong> key decisions so skimmers can navigate.</p>
+        <div class="placeholder" style="aspect-ratio:16/9; margin-top:24px;">Design explorations — 16:9</div>
+        <p class="cs-image-caption">Design explorations or before/after comparison</p>
+      </div>
+
+      <div class="cs-section">
+        <h2>Outcome</h2>
+        <p>Replace with outcomes. Quantify where possible. Focus on what changed for users, not just what was shipped.</p>
+      </div>
+
+    </div>
+
+    <!-- NEXT PROJECT -->
+    <div class="container">
+      <div class="cs-next">
+        <p class="cs-next-label">Next project</p>
+        <p class="cs-next-title" id="cs-next" onclick="showCase('finance')">Finance Process in Enterprise Software →</p>
+      </div>
+    </div>
+
+    <!-- FOOTER (repeated) -->
+    <footer>
+      <span class="footer-name">Tina Singh — 2025</span>
+      <ul class="footer-links">
+        <li><a href="#" onclick="showPage('home')">Work</a></li>
+        <li><a href="#">LinkedIn</a></li>
+        <li><a href="#">Resume</a></li>
+        <li><a href="mailto:hello@tinasingh.co">Contact</a></li>
+      </ul>
+    </footer>
+
+  </div><!-- /page-case -->
+
+
+  <!-- ============================================================
+       SCROLL PARALLAX + PAGE NAVIGATION
+       Lightweight vanilla JS — no dependencies.
+       In Framer this is replaced by native scroll components.
+       ============================================================ -->
+  <script>
+    // ── Simple page router ──
+    const cases = {
+      'nav-redesign': {
+        label: '01 — UX / Systems',
+        title: 'Platform Navigation Redesign',
+        subtitle: 'Systems Architecture for Scalable Usability',
+        role: 'UX Designer, Design Systems',
+        tools: 'Figma, FigJam, Design System',
+        team: 'PM, Engineers, QA',
+        timeline: '6 months',
+        next: 'finance',
+        nextTitle: 'Finance Process in Enterprise Software →'
+      },
+      'finance': {
+        label: '02 — UX / UX Research',
+        title: 'Finance Process in Enterprise Software',
+        subtitle: 'Dashboard for SAP analytics at McKinsey',
+        role: 'User Researcher & Strategist, UX/UI Design',
+        tools: 'Figma, Miro, Sketch, Zoom',
+        team: 'PM (Finance), SAP Devs, Finance Analysts',
+        timeline: '4 months',
+        next: 'login',
+        nextTitle: 'Login Redesign →'
+      },
+      'login': {
+        label: '03 — UX / Systems',
+        title: 'Login Redesign',
+        subtitle: 'A system fix disguised as a small update',
+        role: 'UX Designer, Design Systems',
+        tools: 'Figma, FigJam, Design System Library',
+        team: 'Product Manager, Engineers, QA, Solution Engineers',
+        timeline: 'June – July 2025',
+        next: 'schedule',
+        nextTitle: 'Schedule and Constraint Management →'
+      },
+      'schedule': {
+        label: '04 — Product Design',
+        title: 'Schedule and Constraint Management',
+        subtitle: 'Solving scheduling gaps with UX',
+        role: 'Product Designer',
+        tools: 'Figma, FigJam',
+        team: 'PM, Engineers',
+        timeline: '3 months',
+        next: 'inline-alert',
+        nextTitle: 'Inline Alert →'
+      },
+      'inline-alert': {
+        label: '05 — Design Systems',
+        title: 'Inline Alert',
+        subtitle: 'Clear system for banners, toasts, and inline alerts',
+        role: 'Design Systems, UX',
+        tools: 'Figma, Tokens Studio',
+        team: '5+ product teams',
+        timeline: 'Feb – May 2025',
+        next: 'nav-redesign',
+        nextTitle: 'Platform Navigation Redesign →'
+      }
+    };
+
+    function showCase(slug) {
+      const data = cases[slug];
+      if (!data) return;
+      document.getElementById('cs-label').textContent    = data.label;
+      document.getElementById('cs-title').textContent    = data.title;
+      document.getElementById('cs-subtitle').textContent = data.subtitle;
+      document.getElementById('cs-role').textContent     = data.role;
+      document.getElementById('cs-tools').textContent    = data.tools;
+      document.getElementById('cs-team').textContent     = data.team;
+      document.getElementById('cs-timeline').textContent = data.timeline;
+      document.getElementById('cs-next').textContent     = data.nextTitle;
+      document.getElementById('cs-next').onclick = () => showCase(data.next);
+      showPage('case');
+    }
+
+    function showPage(p) {
+      document.getElementById('page-home').style.display = p === 'home' ? 'block' : 'none';
+      document.getElementById('page-case').style.display = p === 'case' ? 'block' : 'none';
+      window.scrollTo(0, 0);
+    }
+
+    // ── Hero grid parallax ──
+    const grid = document.querySelector('.hero-grid');
+    const scrollHint = document.querySelector('.scroll-hint');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if (grid) grid.style.transform = `translateY(${y * 0.15}px)`;
+      if (scrollHint) scrollHint.style.opacity = Math.max(0, 1 - y / 200);
+    }, { passive: true });
+
+    // ── Scroll reveal for cards ──
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.case-card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(40px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease, border-color 0.3s';
+      revealObserver.observe(card);
+    });
+  </script>
+
+</body>
+</html>
