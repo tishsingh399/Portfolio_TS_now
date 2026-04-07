@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 export default function Nav() {
@@ -30,16 +29,17 @@ export default function Nav() {
       }}
       aria-label="Main navigation"
     >
-      {/* TS monogram */}
-      <Link href="/" aria-label="Tina Singh — home">
-        <Image
-          src="/ts-monogram.svg"
-          alt="TS monogram"
-          width={32}
-          height={32}
-          style={{ filter: 'invert(1)', opacity: 0.8 }}
-          priority
-        />
+      <Link
+        href="/"
+        style={{
+          fontFamily: 'var(--font-jetbrains-mono)',
+          fontSize: '11px',
+          color: 'var(--text-muted)',
+          letterSpacing: '0.16em',
+          textTransform: 'uppercase',
+        }}
+      >
+        TS
       </Link>
 
       <ul style={{ display: 'flex', gap: '48px', listStyle: 'none' }}>
