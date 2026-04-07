@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+/* ============================================================
+   BRAND TOKENS
+   ============================================================ */
+:root {
+  --bg:             #000000;
+  --surface:        #0D0D0D;
+  --surface-2:      #1A1A1A;
+  --border:         rgba(255, 255, 255, 0.07);
+  --border-strong:  rgba(255, 255, 255, 0.18);
+  --text-primary:   #FFFFFF;
+  --text-secondary: #C8C8C8;
+  --text-muted:     #666666;
+}
+
+@theme inline {
+  --font-display: var(--font-archivo);
+  --font-body: var(--font-space-grotesk);
+  --font-mono: var(--font-jetbrains-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-space-grotesk), 'Inter', sans-serif;
+  font-size: clamp(15px, 1.1vw, 17px);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.4);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   HOVER UTILITIES (used in server components)
+   ============================================================ */
+.hover-primary {
+  transition: color 0.2s;
+  color: var(--text-muted);
+}
+.hover-primary:hover { color: var(--text-primary); }
+
+.hover-primary-from-secondary {
+  transition: color 0.2s;
+  color: var(--text-secondary);
+}
+.hover-primary-from-secondary:hover { color: var(--text-primary); }
+
+.skill-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-jetbrains-mono, monospace);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+  cursor: default;
+  list-style: none;
+}
+.skill-row:hover { color: var(--text-primary); }
+
+.contact-link {
+  font-family: var(--font-jetbrains-mono, monospace);
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: gap 0.3s, color 0.2s;
+}
+.contact-link:hover {
+  gap: 20px;
+  color: var(--text-primary);
+}
+
+.footer-giant-name {
+  font-family: var(--font-archivo, sans-serif);
+  font-size: clamp(64px, 12vw, 160px);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+  opacity: 0.12;
+  padding: 80px 60px 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: opacity 0.4s;
+  user-select: none;
+}
+.footer-giant-name:hover { opacity: 0.2; }
+
+.footer-nav-link {
+  font-family: var(--font-jetbrains-mono, monospace);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.footer-nav-link:hover { color: var(--text-primary); }
+
+.metric-box {
+  padding: 48px 60px;
+  border-right: 1px solid var(--border);
+}
+.metric-box:last-child { border-right: none; }
